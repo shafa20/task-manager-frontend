@@ -102,11 +102,9 @@ const Home = () => {
               </Box>
               <SearchBar value={pendingSearch} onChange={(val) => { setPendingPage(1); setPendingSearch(val); }} />
             </div>
-            {pendingLoading ? (
-              <Spinner size="large" />
-            ) : pendingError ? (
-              <Banner status="critical">{pendingError}</Banner>
-            ) : (
+            {pendingLoading && <Spinner size="large" />}
+            {!pendingLoading && pendingError && <Banner status="critical">{pendingError}</Banner>}
+            {!pendingLoading && !pendingError && (
               <>
                 <TaskTable tasks={pendingTasks} refreshTasks={() => fetchPendingTasks(pendingPage, pendingSearch)} setSuccess={handleSuccess} />
                 {pendingMeta && pendingMeta.last_page > 1 && (
@@ -127,8 +125,7 @@ const Home = () => {
                       Next
                     </Button>
                   </div>
-                )} 
-
+                )}
               </>
             )}
           </Card>
@@ -146,11 +143,9 @@ const Home = () => {
               </Box>
               <SearchBar value={completedSearch} onChange={(val) => { setCompletedPage(1); setCompletedSearch(val); }} />
             </div>
-            {completedLoading ? (
-              <Spinner size="large" />
-            ) : completedError ? (
-              <Banner status="critical">{completedError}</Banner>
-            ) : (
+            {completedLoading && <Spinner size="large" />}
+            {!completedLoading && completedError && <Banner status="critical">{completedError}</Banner>}
+            {!completedLoading && !completedError && (
               <>
                 <TaskTable tasks={completedTasks} refreshTasks={() => fetchCompletedTasks(completedPage, completedSearch)} setSuccess={handleSuccess} />
                 {completedMeta && completedMeta.last_page > 1 && (
@@ -171,8 +166,7 @@ const Home = () => {
                       Next
                     </Button>
                   </div>
-                )} 
-
+                )}
               </>
             )}
           </Card>
