@@ -81,6 +81,9 @@ const Home = () => {
   const completedHasNext = completedMeta && completedMeta.current_page < completedMeta.last_page;
 
 
+  // Handler for success messages (delete, etc.)
+  const handleSuccess = (msg) => setSuccess(msg);
+
   return (
     <Page title="Task Manager" primaryAction={{content: 'Create New Task', onAction: () => navigate('/create')}}>
       {success && <Banner status="success">{success}</Banner>}
@@ -105,7 +108,7 @@ const Home = () => {
               <Banner status="critical">{pendingError}</Banner>
             ) : (
               <>
-                <TaskTable tasks={pendingTasks} refreshTasks={() => fetchPendingTasks(pendingPage, pendingSearch)} />
+                <TaskTable tasks={pendingTasks} refreshTasks={() => fetchPendingTasks(pendingPage, pendingSearch)} setSuccess={handleSuccess} />
                 {pendingMeta && pendingMeta.last_page > 1 && (
                   <div style={{ display: 'flex', justifyContent: 'center', marginTop: 16, gap: 8 }}>
                     <Button
@@ -149,7 +152,7 @@ const Home = () => {
               <Banner status="critical">{completedError}</Banner>
             ) : (
               <>
-                <TaskTable tasks={completedTasks} refreshTasks={() => fetchCompletedTasks(completedPage, completedSearch)} />
+                <TaskTable tasks={completedTasks} refreshTasks={() => fetchCompletedTasks(completedPage, completedSearch)} setSuccess={handleSuccess} />
                 {completedMeta && completedMeta.last_page > 1 && (
                   <div style={{ display: 'flex', justifyContent: 'center', marginTop: 16, gap: 8 }}>
                     <Button

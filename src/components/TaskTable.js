@@ -3,7 +3,7 @@ import { DataTable, Button, InlineStack, Badge, Modal, TextContainer } from '@sh
 import { useNavigate } from 'react-router-dom';
 import { deleteTask } from '../api/tasks';
 
-const TaskTable = ({ tasks, refreshTasks }) => {
+const TaskTable = ({ tasks, refreshTasks, setSuccess }) => {
   const navigate = useNavigate();
   const [activeModal, setActiveModal] = React.useState(null);
 
@@ -11,7 +11,8 @@ const TaskTable = ({ tasks, refreshTasks }) => {
     await deleteTask(id);
     refreshTasks();
     setActiveModal(null);
-  }, [refreshTasks]);
+    if (setSuccess) setSuccess('Task deleted successfully!');
+  }, [refreshTasks, setSuccess]);
 
   const rows = tasks.map((task) => [
     task.name,
